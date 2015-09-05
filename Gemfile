@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
+# for local
+# ruby '2.2.2'
+# for Heroku
+ruby '2.2.3'
+
 gem 'log4ever'
 gem 'parallel_runner'
 gem 'mechanize'
