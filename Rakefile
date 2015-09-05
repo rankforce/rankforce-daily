@@ -34,7 +34,7 @@ task :heroku_deploy => [:github_push] do
   sh 'git push heroku master'
 end
 
-task :heroku_env => [:heroku_env_clean, :timezone] do
+task :heroku_env => [:heroku_env_clean, :timezone, :lang] do
   config.each do |key, value|
     sh "heroku config:add #{key}=#{value}"
   end
@@ -48,6 +48,10 @@ end
 
 task :timezone do
   sh "heroku config:add TZ=Asia/Tokyo"
+end
+
+task :lang do
+  sh "heroku config:set LANG=ja_JP.UTF-8"
 end
 
 task :heroku_start do
