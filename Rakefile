@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
-$: << File.dirname(__FILE__) + "/lib"
+$: << File.dirname(__FILE__) + "/core/lib"
 require 'rankforce'
 require 'rspec/core/rake_task'
 require 'yaml'
 
 config_files = [
-  YAML.load_file(File.dirname(__FILE__) + "/core/config/twitter.auth.yml"),
+  # YAML.load_file(File.dirname(__FILE__) + "/core/config/twitter.auth.yml"),
+  # YAML.load_file(File.dirname(__FILE__) + "/core/config/evernote.auth.yml"),
+  # YAML.load_file(File.dirname(__FILE__) + "/core/config/mongolab.yml")
+  YAML.load_file(File.dirname(__FILE__) + "/core/config/twitter.auth.test.yml"),
   YAML.load_file(File.dirname(__FILE__) + "/core/config/evernote.auth.yml"),
-  YAML.load_file(File.dirname(__FILE__) + "/core/config/mongolab.yml")
+  YAML.load_file(File.dirname(__FILE__) + "/core/config/mongolab.test.yml"),
+  YAML.load_file(File.dirname(__FILE__) + "/core/config/bitly.auth.yml")
 ]
 
 config = {}
@@ -18,8 +22,8 @@ end
 task:default => [:spec, :github_push, :heroku_deploy]
 
 RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rspec_opts = ['-cfs']
+  spec.pattern = 'core/spec/**/*_spec.rb'
+  spec.rspec_opts = ['--format documentation']
 end
 
 task :github_push => [:spec] do
@@ -52,4 +56,8 @@ end
 
 task :heroku_stop do
   sh "heroku scale clock=0"
+end
+
+task :rbenv_update do
+  sh "sudo brew upgrade ruby-build"
 end
