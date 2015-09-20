@@ -49,7 +49,7 @@ module RankForce
 
     private
     def direct_message
-      File.open("#{CONFIG_ROOT}/#{DIECT_MESSAGE}") do |f|
+      File.open("#{CONFIG_ROOT}/#{DIRECT_MESSAGE}") do |f|
         return f.read.strip
       end
     end
@@ -70,10 +70,10 @@ module RankForce
           # retweet(status) unless status[:retweeted_status].nil?
           # # quote_retweet
           # quote_retweet(status) if status[:retweeted_status].nil? && status[:event].nil?
-          # # favorite
-          # favorite(status) if status[:event] == 'favorite'
-          # # unfavorite
-          # unfavorite(status) if status[:event] == 'unfavorite'
+          # favorite
+          favorite(status) if status[:event] == 'favorite'
+          # unfavorite
+          unfavorite(status) if status[:event] == 'unfavorite'
         end
         @client_stream.on_error do |message|
           syslog.error(message)
